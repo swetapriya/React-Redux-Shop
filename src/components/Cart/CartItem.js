@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CartItem = ({ name, price, onClick ,onClickAdd}) => {
+const CartItem = ({ name, price, onClick , onClickAdd, number}) => { 
     return (
         <div className="cart-item">
             <div>
@@ -9,7 +9,7 @@ const CartItem = ({ name, price, onClick ,onClickAdd}) => {
                 <br/>
                 <button onClick={onClick} className= 'btn btn-primary'>-</button> 
                     &nbsp; &nbsp;
-                    <strong>1</strong>   
+                    <strong>{number}</strong>   
                     &nbsp; &nbsp;  
                 <button className= 'btn btn-primary'  onClick={onClickAdd}>+</button> 
                 {/* <button className="btn btn-danger btn-xs" onClick={onClick}>X</button> */}
@@ -21,6 +21,7 @@ const CartItem = ({ name, price, onClick ,onClickAdd}) => {
 
 CartItem.propTypes = {
     name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired
 }

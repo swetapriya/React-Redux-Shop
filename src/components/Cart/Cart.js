@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CartItem from './CartItem';
 
-const Cart = ({ items, total, removeFromCart,addToCart }) => {
+const Cart = ({ items, total, reduceFromCart, removeFromCart, addToCart, number }) => { console.log('items,--', items)
     return (
         <div>
             <h3>Shopping Cart</h3>
@@ -13,7 +13,7 @@ const Cart = ({ items, total, removeFromCart,addToCart }) => {
                         {items.length > 0 && (
                             <div className="cart__body">
                                 {items.map(item => (
-                                    <CartItem key={item.id} {...item} onClick={() => removeFromCart(item.id)} onClickAdd = {() => addToCart(item.id)} />
+                                    <CartItem key={item.id+Math.random()} {...item} number={number} onClick={() => number === 1 ? removeFromCart(item.id) : reduceFromCart(item.id)} onClickAdd = {() => addToCart(item.id)} />
                                 ))}
                             </div>
                         )}
@@ -31,6 +31,8 @@ const Cart = ({ items, total, removeFromCart,addToCart }) => {
 Cart.propTypes = {
     items: PropTypes.array,
     total: PropTypes.number,
+    number: PropTypes.number,
+    reduceFromCart: PropTypes.func.isRequired,
     removeFromCart: PropTypes.func.isRequired
 }
 
