@@ -18,8 +18,8 @@ class Product extends Component {
     }
 
     handleAdd = () => { 
-        const { id, addToCart, inventory } = this.props;
-        addToCart(id, inventory);
+        const { id, inventory, increaseToCart } = this.props;
+        increaseToCart(id, inventory);
     }
 
     render() {
@@ -69,6 +69,7 @@ Product.propTypes = {
     image: PropTypes.string,
     isInCart: PropTypes.bool.isRequired,
     addToCart: PropTypes.func.isRequired,
+    increaseToCart: PropTypes.func.isRequired,
     removeFromCart: PropTypes.func.isRequired,
     reduceFromCart: PropTypes.func.isRequired,
 }

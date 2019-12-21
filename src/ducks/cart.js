@@ -4,6 +4,8 @@ import { getProduct } from '../ducks/products';
 const CART_ADD   = 'cart/ADD';
 const CART_REMOVE = 'cart/REMOVE';
 const CART_REDUCE = 'cart/REDUCE';
+const CART_INCREASE = 'cart/INCREASE';
+
 
 // reducer
 const initialState = {
@@ -19,6 +21,8 @@ export default function cart(state = initialState, action = {}) {
             return handleCartRemove(state, action.payload);
         case CART_REDUCE:
             return handleCartReduce(state, action.payload);
+        case CART_INCREASE:
+        return handleCartIncrease(state, action.payload);
         default:
             return state;
     }
@@ -28,6 +32,13 @@ function handleCartAdd(state, payload) {
     return {
         ...state,
         items: [ ...state.items, payload.productId ],
+        number: state.number + 1
+    };
+}
+
+function handleCartIncrease(state, payload) {
+    return {
+        ...state,
         number: state.number + 1
     };
 }
@@ -76,6 +87,14 @@ export function reduceFromCart(productId) {
     }
 }
 
+export function increaseToCart(productId) {
+    return {
+        type: CART_INCREASE,
+        payload: {
+            productId
+        }
+    }
+}
 // selectors
 export function isInCart(state, props) {
     return state.cart.items.indexOf(props.id) !== -1;
@@ -89,7 +108,7 @@ export function getNumber(state, props) {
     return state.cart.number; 
 }
 
-export function getTotal(state, props) { 
+export function getTotal(state, props) {  console.log('reduce-', state.cart.items)
     return state.cart.items.reduce((acc, id) => {
         const item = getProduct(state, { id }); 
         return acc + item.price;

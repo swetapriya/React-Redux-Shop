@@ -14,7 +14,7 @@ const CartItem = ({ name, price, onClick , onClickAdd, number}) => {
                 <button className= 'btn btn-primary'  onClick={onClickAdd}>+</button> 
                 {/* <button className="btn btn-danger btn-xs" onClick={onClick}>X</button> */}
             </div>
-            <div className="cart-item__price">{price} </div>
+            <div className="cart-item__price">{(number*price).toFixed(2)} </div>
         </div>
     );
 }
