@@ -36,7 +36,7 @@ function handleCartAdd(state, payload) {
     };
 }
 
-function handleCartIncrease(state, payload) {
+function handleCartIncrease(state, payload) { console.log(state, payload)
     return {
         ...state,
         number: state.number + 1
@@ -87,11 +87,12 @@ export function reduceFromCart(productId) {
     }
 }
 
-export function increaseToCart(productId) {
+export function increaseToCart(productId, number) {
     return {
         type: CART_INCREASE,
         payload: {
-            productId
+            productId,
+            number
         }
     }
 }
@@ -108,7 +109,7 @@ export function getNumber(state, props) {
     return state.cart.number; 
 }
 
-export function getTotal(state, props) {  console.log('reduce-', state.cart.items)
+export function getTotal(state, props) {  
     return state.cart.items.reduce((acc, id) => {
         const item = getProduct(state, { id }); 
         return acc + item.price;

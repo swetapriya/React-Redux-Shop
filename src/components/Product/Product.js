@@ -1,30 +1,60 @@
 import React, { Component } from 'react';
+import { Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 class Product extends Component {
+    constructor(){
+        super();
+        this.state={
+            number : 0,
+            show: false
+        }
+    }
     
     handleClick = () => { 
         const { id, addToCart, removeFromCart, isInCart, number, inventory, reduceFromCart } = this.props;
 
         if (isInCart) {
-            if (number === 1){
+            if (this.state.number === 1){
+                this.setState({number: this.state.number-1})
                 removeFromCart(id);
             }else {
                 reduceFromCart(id);
+                this.setState({number: this.state.number-1})
             }
         } else {
+            this.setState({number: this.state.number+1})
             addToCart(id, inventory);
         }
     }
 
     handleAdd = () => { 
-        const { id, inventory, increaseToCart } = this.props;
-        increaseToCart(id, inventory);
+        const { id, increaseToCart, inventory } = this.props;
+        if ( this.state.number === inventory){
+            this.setState({show: true })
+        }else {
+            this.setState({number: this.state.number+1})
+            increaseToCart(id, this.state.number+1);
+        }
     }
 
     render() {
-        const { name, price, image, isInCart, number } = this.props;
+        const { name, price, image, isInCart } = this.props;
         return (
+            <div>
+                 <Modal
+             size="sm"
+             show={this.state.show}
+             onHide={() => this.setState({show : false})}
+             aria-labelledby="example-modal-sizes-title-sm"
+           >
+             <Modal.Header closeButton>
+               <Modal.Title id="example-modal-sizes-title-sm">
+                 Small Modal
+               </Modal.Title>
+             </Modal.Header>
+             <Modal.Body>...</Modal.Body>
+           </Modal>
             <div className="product thumbnail">
                 <img src={image} alt="product"/>
                 <div className="caption">
@@ -38,7 +68,7 @@ class Product extends Component {
                                     -
                                 </button>
                                 &nbsp; &nbsp;
-                                <strong>{number}</strong>   
+                                <strong>{this.state.number}</strong>   
                                 &nbsp; &nbsp;                 
                                 <button className= 'btn btn-primary' onClick={this.handleAdd}>
                                     +
@@ -56,6 +86,8 @@ class Product extends Component {
                     </div>
                 </div>
             </div>
+            
+           </div>
         );
     }
 }
