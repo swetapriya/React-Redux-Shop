@@ -28,7 +28,7 @@ export default function cart(state = initialState, action = {}) {
     }
 }
 
-function handleCartAdd(state, payload) {
+function handleCartAdd(state, payload) { console.log(state, payload)
     return {
         ...state,
         items: [ ...state.items, payload.productId ],
@@ -36,10 +36,10 @@ function handleCartAdd(state, payload) {
     };
 }
 
-function handleCartIncrease(state, payload) { console.log(state, payload)
+function handleCartIncrease(state, payload) { 
     return {
         ...state,
-        number: state.number + 1
+        number: payload.number
     };
 }
 
@@ -54,17 +54,17 @@ function handleCartRemove(state, payload) {
 function handleCartReduce(state, payload) {
     return {
         ...state,
-        number: state.number - 1
+        number: payload.number
     };
 }
 
 // action creators
-export function addToCart(productId, stock) {
+export function addToCart(productId, number) {
     return {
         type: CART_ADD,
         payload: {
             productId,
-            stock
+            number
         }
     }
 }
@@ -78,11 +78,12 @@ export function removeFromCart(productId) {
     }
 }
 
-export function reduceFromCart(productId) {
+export function reduceFromCart(productId, number) {
     return {
         type: CART_REDUCE,
         payload: {
-            productId
+            productId,
+            number
         }
     }
 }

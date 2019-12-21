@@ -10,9 +10,9 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addToCart: (id) => dispatch(addToCart(id)),
+    addToCart: (id, number) => dispatch(addToCart(id, number)),
     removeFromCart: (id) => dispatch(removeFromCart(id)),
-    reduceFromCart: (id) => dispatch(reduceFromCart(id)),
+    reduceFromCart: (id, number) => dispatch(reduceFromCart(id, number)),
     increaseToCart: (id, number) => dispatch(increaseToCart(id, number))
 })
 

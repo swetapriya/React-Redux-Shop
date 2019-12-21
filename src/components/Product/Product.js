@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 class Product extends Component {
@@ -13,25 +12,25 @@ class Product extends Component {
     
     handleClick = () => { 
         const { id, addToCart, removeFromCart, isInCart, number, inventory, reduceFromCart } = this.props;
-
+        this.setState({show : false})
         if (isInCart) {
             if (this.state.number === 1){
                 this.setState({number: this.state.number-1})
                 removeFromCart(id);
             }else {
-                reduceFromCart(id);
+                reduceFromCart(id, this.state.number-1);
                 this.setState({number: this.state.number-1})
             }
         } else {
             this.setState({number: this.state.number+1})
-            addToCart(id, inventory);
+            addToCart(id, this.state.number+1);
         }
     }
 
     handleAdd = () => { 
         const { id, increaseToCart, inventory } = this.props;
         if ( this.state.number === inventory){
-            this.setState({show: true })
+            this.setState({show : true})
         }else {
             this.setState({number: this.state.number+1})
             increaseToCart(id, this.state.number+1);
@@ -41,20 +40,6 @@ class Product extends Component {
     render() {
         const { name, price, image, isInCart } = this.props;
         return (
-            <div>
-                 <Modal
-             size="sm"
-             show={this.state.show}
-             onHide={() => this.setState({show : false})}
-             aria-labelledby="example-modal-sizes-title-sm"
-           >
-             <Modal.Header closeButton>
-               <Modal.Title id="example-modal-sizes-title-sm">
-                 Small Modal
-               </Modal.Title>
-             </Modal.Header>
-             <Modal.Body>...</Modal.Body>
-           </Modal>
             <div className="product thumbnail">
                 <img src={image} alt="product"/>
                 <div className="caption">
@@ -84,10 +69,11 @@ class Product extends Component {
                             ) 
                         }
                     </div>
+                    <div className="alert alert-danger" style={{ "display" : this.state.show? "block" : "none"}}>
+                        <strong>Error!</strong> Can't add more than {this.state.number}
+                    </div>
                 </div>
             </div>
-            
-           </div>
         );
     }
 }
