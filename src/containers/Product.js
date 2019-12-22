@@ -5,7 +5,7 @@ import { addToCart, removeFromCart, isInCart, getNumber, reduceFromCart, increas
 const mapStateToProps = (state, props) => {
     return {
         isInCart: isInCart(state, props),
-        number: getNumber(state, props)
+        number: getNumber(state,props)
     }
 }
 

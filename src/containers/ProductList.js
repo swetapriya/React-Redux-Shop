@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import ProductList from '../components/ProductList';
 import { getProducts } from '../ducks/products';
+import { getNumber } from '../ducks/cart';
 
 const mapStateToProps = (state, props) => {
     return {
-        products: getProducts(state, props)
+        products: getProducts(state, props),
+        number: getNumber(state,props)
     }
 }
 

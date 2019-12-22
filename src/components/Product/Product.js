@@ -9,9 +9,10 @@ class Product extends Component {
             show: false
         }
     }
+
     
     handleClick = () => { 
-        const { id, addToCart, removeFromCart, isInCart, number, inventory, reduceFromCart } = this.props;
+        const { id, addToCart, removeFromCart, isInCart, reduceFromCart } = this.props;
         this.setState({show : false})
         if (isInCart) {
             if (this.state.number === 1){
@@ -38,7 +39,7 @@ class Product extends Component {
     }
 
     render() {
-        const { name, price, image, isInCart } = this.props;
+        const { name, price, image, isInCart} = this.props;
         return (
             <div className="product thumbnail">
                 <img src={image} alt="product"/>
@@ -81,7 +82,7 @@ class Product extends Component {
 Product.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired,
+    number: PropTypes.object.isRequired,
     price: PropTypes.number,
     currency: PropTypes.string,
     image: PropTypes.string,

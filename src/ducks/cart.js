@@ -10,7 +10,7 @@ const CART_INCREASE = 'cart/INCREASE';
 // reducer
 const initialState = {
     items: [], // array of product ids
-    number: 0
+    number: {id: 0,value: 0}
 };
 
 export default function cart(state = initialState, action = {}) { 
@@ -28,33 +28,33 @@ export default function cart(state = initialState, action = {}) {
     }
 }
 
-function handleCartAdd(state, payload) { console.log(state, payload)
+function handleCartAdd(state, payload) { 
     return {
         ...state,
         items: [ ...state.items, payload.productId ],
-        number: state.number + 1
+        number: {id: payload.productId, value: payload.number}
     };
 }
 
-function handleCartIncrease(state, payload) { 
+function handleCartIncrease(state, payload) {
     return {
         ...state,
-        number: payload.number
+        number: {id: payload.productId, value: payload.number}
     };
 }
 
-function handleCartRemove(state, payload) {
+function handleCartRemove(state, payload) {  
     return {
         ...state,
         items: state.items.filter(id => id !== payload.productId),
-        number: state.number - 1
+        number: {id: payload.productId, value: 0}
     };
 }
 
 function handleCartReduce(state, payload) {
     return {
         ...state,
-        number: payload.number
+        number: {id: payload.productId, value: payload.number}
     };
 }
 
@@ -110,9 +110,19 @@ export function getNumber(state, props) {
     return state.cart.number; 
 }
 
-export function getTotal(state, props) {  
-    return state.cart.items.reduce((acc, id) => {
-        const item = getProduct(state, { id }); 
-        return acc + item.price;
-    }, 0);
+export function getTotal(state, props) {
+        var total = 0;
+        var total1 = 0;
+
+     state.cart.items.map((id) => { 
+            const item = getProduct(state, { id });
+            if (id === state.cart.number.id){
+                item.number = state.cart.number.value;
+                total = item.number * item.price;
+            }else {
+                total = item.number * item.price; 
+            } 
+            total1 = (total1 + total);
+    })
+        return total1;
 }

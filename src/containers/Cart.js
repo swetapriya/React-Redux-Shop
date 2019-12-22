@@ -12,8 +12,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => ({
     removeFromCart: (id) => dispatch(removeFromCart(id)),
-    reduceFromCart: (id) => dispatch(reduceFromCart(id)),
-    increaseToCart: (id) => dispatch(increaseToCart(id))
+    reduceFromCart: (id, number) => dispatch(reduceFromCart(id, number)),
+    increaseToCart: (id, number) => dispatch(increaseToCart(id, number))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
